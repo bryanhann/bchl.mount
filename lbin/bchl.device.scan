@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PLACES="/media/${USER} /Volumes"
+
+_insitu_activate () {
+    [ -f "${1}/.insitu/activate" ] && {
+        pushd ${1}/.insitu  > /dev/null >> /dev/null
+        . ./activate
+        popd > /dev/null >> /dev/null
+    }
+}
+
+main () {
+    for xx in ${PLACES}; do
+        [ -d ${xx} ] || continue
+        #_process_mountpoint $xx
+        for name in $(ls ${xx}); do
+            _insitu_activate ${xx}/${name}
+        done
+    done
+}
+
+main
+
+set | grep ^DEVICE_

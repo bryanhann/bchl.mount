@@ -1,0 +1,18 @@
+#!/bin/bash
+main() {
+    [ "$(basename ${PWD})" = ".insitu" ] || {
+        echo THIS MAY ONLY BE SOURCED FROM WITHIN AN [.insitu] FOLDER
+        return
+    }
+    [ "$1" = "-t" ] || return
+    local key=$2
+    local val=$3
+    shift
+    local here=$PWD
+    local root=$(dirname $PWD)
+    local name=$(basename $root)
+    local prefix=DEVICE_${name}
+    export ${prefix}__ROOT__=${root}
+    [ "$key" = "" ] || export ${prefix}_${key}=${root}/${val}
+}
+main $*

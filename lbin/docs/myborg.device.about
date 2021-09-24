@@ -1,0 +1,41 @@
+myborg.device.scan
+myborg.device.src.register
+
+Activate mounted devices.
+
+OVERVIEW:
+    The script 'myborg.device.scan'
+    Activate all client devices currently mounted on the
+    filesystem. A cooperating client will write information
+    about itself to the environment. After all clients have
+    been activated, the relevant environment is printed to
+    stdout. All environment modifications occur in a subshell
+    and when the command ends there will me no environmental
+    change.
+
+THE ENVIRONMENT:
+
+    
+    All environment changes via exporting 
+            DEVICE_[name]setting the environment variable
+    Normally an activated client will write
+    information about itself to the environment. After all
+    clients have been activated, Upon activation, a client will write information
+    about itself to the environment. After all clients Each clientdevice will write information about
+    itself to the environment. Wthe device to stdoutfound on theIterate through mountpoints looking for all cooperating
+    mounted device. Each cooperating If such a device is mounted at
+        [/some/known/mountpoint/Foo]
+    then path/Foo]
+        mounted try to activate
+    devices mounted there. Known mountpoints include
+        [/Volumes]      for macos
+        [/media/$USER]  for raspberry pi
+    
+
+    If a cooperating device is mounted on [/Volumes/Foo] then
+
+    , then
+
+        
+        Insitu activate the root folder of every mounted device
+    that has the file ./insitu/every mounted device that has

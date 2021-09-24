@@ -1,0 +1,76 @@
+USAGE
+-----
+    myborg.device.scan
+
+    This script is called, not sourced. When called it will activate all
+    mounted client devices. These clients will modify the environment by
+    adding environment variables that start with [DEVICE_]. This script
+    will then dump these to STDOUT for the user to process. The user's
+    environment will be unchanged by the call.
+
+    NOTE:
+        The script will search for clients at known mountpoints. Such
+        mountpoints include:
+
+            [/Volumes]      for macos
+            [/media/$HOME]  for raspberry pi
+
+        These values are currently hardcoded.
+
+        XXX move them outside of the script.
+
+USAGE
+_____
+    source myborg.device.src.register -t [KEY VALUE]
+
+    This must be sourced only from a file within an [.insitu]
+    folder. The following will be executed: 
+        export DEVICE_{name}__ROOT__=/some/mountpoint/{name}
+        export DEVICE_{name}_{KEY}=/some/mountpoint/{name}/{VALUE}
+
+OVERVIEW
+--------
+    The scripts [myborg.device.*] are intended to allow client 
+    devices mounted on the filesystem to report information about
+    themselves. This is done dynamically by executing the script
+    [myborg.device.scan] which will activate all found clients.
+    The clients in turn will report information about themses
+    by sourcing the script [myborg.device.src.register].
+
+CLIENTS:
+-------
+    A client is any mounted devices that has the file
+    [./.insitu/acivate] (aka its 'activating script')
+    relative to it's mountpath. A client is activated
+    by sourcing this activation script from within its
+    [./insitu] folder. This script should modify its
+    environment by sourcing [myborg.device.src.register]
+    which will create environment key=value pairs of the
+    form
+        DEVICE_{NAME}_{KEY}={VALUE}
+
+    Example:
+        A client mounted at 
+            [/some/mountpoint/Foo]
+        is activated by sourcing
+            [/some/mountpoint/Foo/.insitu/activate]
+        from within the folder
+            [/some/mountpoint/Foo/.insitu].
+        This activation script consists of the lines
+            1. [source myborg.device.src.register -t MUSIC my/music].
+            2. [source myborg.device.src.register -t FTP   data/ftp/data].
+        The result is that the following is added to the environment:
+            1. [$DEVICE_Foo_MUSIC]   -->  [/some/mountpoint/Foo/my/music]
+            2. [$DEVICE_Foo_FTP]     -->  [/some/mountpoint/Foo/data/ftp/data]
+            3. [$DEVICE_Foo__ROOT__] -->  [/some/mountpoint/Foo]
+
+        It is the responsibility of the user to set such values in a way
+        useful to the user. Typically these values will represent a path
+        to a folder or file on the device that provides some service.
+
+        Note the third result. This is automatically set whenever a client
+        sources [myborg.device.src.register]. If this is the only value the
+        client wishes to export, the script may be sourced witn only the
+        argument [-t].
+
+
