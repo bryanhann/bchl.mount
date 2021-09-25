@@ -1,9 +1,5 @@
 #!/bin/bash
 main() {
-    [ "$(basename ${PWD})" = ".insitu" ] || {
-        echo THIS MAY ONLY BE SOURCED FROM WITHIN AN [.insitu] FOLDER
-        return
-    }
     [ "$1" = "-t" ] || return
     local key=$2
     local val=$3
@@ -15,4 +11,5 @@ main() {
     export ${prefix}__ROOT__=${root}
     [ "$key" = "" ] || export ${prefix}_${key}=${root}/${val}
 }
-main $*
+
+borg.insitu.assert && main $*

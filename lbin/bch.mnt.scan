@@ -13,7 +13,6 @@ _insitu_activate () {
 main () {
     for xx in ${PLACES}; do
         [ -d ${xx} ] || continue
-        #_process_mountpoint $xx
         for name in $(ls ${xx}); do
             _insitu_activate ${xx}/${name}
         done

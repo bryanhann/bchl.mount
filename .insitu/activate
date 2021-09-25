@@ -1,1 +1,2 @@
-cp ${PWD}/../lbin/bchl.* ~/.local/bin
+#!/bin/sh
+__lbin_default
