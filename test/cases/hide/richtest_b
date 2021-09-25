@@ -1,0 +1,7 @@
+#!/source/this/sh
+desc="a dest"
+
+the_test () {
+    _eq "[${TEST_LINE}S]" \
+        "[$(device_line4key ${TEST_KEY})]"
+}

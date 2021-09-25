@@ -1,0 +1,3 @@
+#!/source/this/sh
+_eq "[o3]" \
+    "[$(bch_mnt_line4key ${TEST_BAD_KEY})]"

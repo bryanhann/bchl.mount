@@ -1,0 +1,13 @@
+#!/bin/sh
+.  ./lib/testing.sh
+.  ./lib/fixtures.sh
+.  bch.mnt.source.sh
+
+#runtest () {
+#    printf "[----] $1" ;
+#    . $name
+#}
+
+for name in $(ls ./cases/test_*); do
+    runtest $name
+done
