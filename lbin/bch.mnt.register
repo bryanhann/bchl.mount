@@ -11,5 +11,4 @@ main() {
     export ${prefix}__ROOT__=${root}
     [ "$key" = "" ] || export ${prefix}_${key}=${root}/${val}
 }
-
-borg.insitu.assert && main $*
+borg.assert.insitu && main $*
