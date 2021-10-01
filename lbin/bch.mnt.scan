@@ -1,24 +1,12 @@
 #!/bin/bash
-
-PLACES="/media/${USER} /Volumes"
-
-_insitu_activate () {
-    [ -f "${1}/.insitu/activate" ] && {
-        pushd ${1}/.insitu  > /dev/null >> /dev/null
-        . ./activate
-        popd > /dev/null >> /dev/null
-    }
-}
-
+MOUNTPOINTS="/media/${USER} /Volumes"
 main () {
-    for xx in ${PLACES}; do
-        [ -d ${xx} ] || continue
-        for name in $(ls ${xx}); do
-            _insitu_activate ${xx}/${name}
+    for mountpoint in ${MOUNTPOINTS}; do
+        borg.ls.fullpath ${mountpoint} | while read LINE; do
+            register="$LINE/.bch.mnt/register"
+            [ -f "${register}" ] && "${register}"
         done
     done
 }
-
 main
 
-set | grep ^DEVICE_
