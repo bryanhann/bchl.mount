@@ -1,12 +1,8 @@
-#!/bin/bash
-MOUNTPOINTS="/media/${USER} /Volumes"
-main () {
-    for mountpoint in ${MOUNTPOINTS}; do
-        borg.ls.fullpath ${mountpoint} | while read LINE; do
-            register="$LINE/.bch.mnt/register"
-            [ -f "${register}" ] && "${register}"
-        done
-    done
-}
-main
+#!/usr/bin/env python3
+from bch_mnt_lib import devices
+def main():
+    for device in devices():
+        device.dump()
 
+if __name__=='__main__':
+    main()

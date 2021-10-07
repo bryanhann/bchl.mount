@@ -1,8 +1,0 @@
-#!/bin/sh
-exp=.bch.mnt/register
-got=$(basename $(dirname $1))/$(basename $1)
-[ "${got}" = "${exp}" ] || > /dev/stderr echo badly called.
-[ "${got}" = "${exp}" ] || exit 1
-devpath=$(dirname $(dirname $1))
-devname=$(basename $devpath)
-echo DEVICE_${devname}_${2}=${devpath}/${3}
